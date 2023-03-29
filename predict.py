@@ -1,8 +1,9 @@
 
 import mlflow
-RUN_ID='eb5ec70b031246f3a1336ba5ea0afe76'
+mlflow.set_tracking_uri("http://127.0.0.1:5000")
+RUN_ID='fa350b60cf564ff1a1d3341e2ac38cbe'
 #logged_model = f'mlflow-artifacts:/728115650857226939/eb5ec70b031246f3a1336ba5ea0afe76/artifacts/model'
-logged_model=f'mlflow-artifacts:/728115650857226939/{RUN_ID}/artifacts/model'
+logged_model=f'mlflow-artifacts:/773732190913986377/{RUN_ID}/artifacts/model'
 #logged_model = f'runs:/{RUN_ID}/model'
 model = mlflow.sklearn.load_model(logged_model)
 
@@ -19,3 +20,4 @@ def recommender(user_id, data=user_mat, model=model):
                 recomendation.append(i)
     return recomendation
 #     print(indices)
+print(recommender('5df49b32cc709107827fb3c7')[:10])
