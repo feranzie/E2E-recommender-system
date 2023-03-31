@@ -1,4 +1,6 @@
 import pandas as pd
+from prefect import flow, task, get_run_logger
+
 #IMPORTING DATA FROM CSV FILES INTO A DATAFRAME FOR ANALYSIS 
 post = pd.read_csv("data/posts.csv")
 user = pd.read_csv("data/users.csv")
