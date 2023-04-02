@@ -62,11 +62,10 @@ def train_model(user_mat):
     with mlflow.start_run(run_name="rec system"):
     mlflow.sklearn.log_model(model, "model")
     logger.info("model trained Successful!y ")
-
     return model
 
 @flow
-def main_flow(data: str = 'data'):
+def main_flow(path: str = 'data'):
     mlflow.set_tracking_uri("http://127.0.0.1:5000")
     mlflow.set_experiment("recommender")
 
