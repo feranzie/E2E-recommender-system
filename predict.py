@@ -5,6 +5,7 @@ RUN_ID='fa350b60cf564ff1a1d3341e2ac38cbe'
 logged_model=f'mlflow-artifacts:/773732190913986377/{RUN_ID}/artifacts/model'
 #logged_model = f'runs:/{RUN_ID}/model'
 model = mlflow.sklearn.load_model(logged_model)
+from flask import Flask, request, jsonify
 import data_helper
 
 main=data_helper.main
@@ -24,3 +25,22 @@ def recommender(user_id, data=data_helper.user_mat, model=model):
 #     print(indices)
 print(recommender('5df49b32cc709107827fb3c7')[:10])
 #recommender(users[0])[:10]
+app = Flask('recommender-prediction')
+
+
+@app.route('/predict', methods=['POST'])
+def predict_endpoint():
+    #ride = request.get_json()
+
+    pred = recommender('5df49b32cc709107827fb3c7')[:10]
+
+    result = {
+        'recommendations': pred,
+        'model_version': RUN_ID
+    }
+
+    return jsonify(result)
+
+
+if __name__ == "__main__":
+    app.run(debug=True, host='0.0.0.0', port=9696)
