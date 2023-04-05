@@ -23,18 +23,19 @@ def recommender(user_id, data=data_helper.user_mat, model=model):
                 recomendation.append(i)
     return recomendation
 #     print(indices)
-print(recommender('5df49b32cc709107827fb3c7')[:10])
+#print(recommender('5df49b32cc709107827fb3c7')[:10])
 #recommender(users[0])[:10]
 app = Flask('recommender-prediction')
 
 
 @app.route('/predict', methods=['POST'])
 def predict_endpoint():
-    #ride = request.get_json()
+    rec = request.get_json()
 
-    pred = recommender('5df49b32cc709107827fb3c7')[:10]
+    pred = recommender(rec)[:10]
 
     result = {
+        "id":rec,
         'recommendations': pred,
         'model_version': RUN_ID
     }
