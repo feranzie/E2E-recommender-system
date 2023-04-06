@@ -1,15 +1,18 @@
+import pickle
+
 import mlflow
 import pandas as pd
-mlflow.set_tracking_uri("http://127.0.0.1:5000")
-RUN_ID='fa350b60cf564ff1a1d3341e2ac38cbe'
-#logged_model = f'mlflow-artifacts:/728115650857226939/eb5ec70b031246f3a1336ba5ea0afe76/artifacts/model'
-logged_model=f'mlflow-artifacts:/773732190913986377/{RUN_ID}/artifacts/model'
-#logged_model = f'runs:/{RUN_ID}/model'
-model = mlflow.sklearn.load_model(logged_model)
-from flask import Flask, request, jsonify
-import pickle
 import scipy.sparse as sp
+#mlflow.set_tracking_uri("http://127.0.0.1:5000")
+#RUN_ID='fa350b60cf564ff1a1d3341e2ac38cbe'
+#logged_model = f'mlflow-artifacts:/728115650857226939/eb5ec70b031246f3a1336ba5ea0afe76/artifacts/model'
+#logged_model=f'mlflow-artifacts:/773732190913986377/{RUN_ID}/artifacts/model'
+#logged_model = f'runs:/{RUN_ID}/model'
+#model = mlflow.sklearn.load_model(logged_model)
+from flask import Flask, jsonify, request
 
+with open('model.bin', 'rb') as f_in:
+    model = pickle.load(f_in)
 with open('users.pkl', 'rb') as f:
     users = pickle.load(f)
 main=pd.read_csv('main.csv')
@@ -42,7 +45,7 @@ def predict_endpoint():
     result = {
         "id":rec,
         'recommendations': pred,
-        'model_version': RUN_ID
+        'model_version': 'prod'
     }
 
     return jsonify(result)
