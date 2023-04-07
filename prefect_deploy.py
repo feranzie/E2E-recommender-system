@@ -27,6 +27,7 @@ def scheduler(date=None):
     data_date = day - relativedelta(months=1)
     logger.info(f"Getting data for month: {str(data_date.month).zfill(2)}")
     get_data()
+    logger.info("running")
     logger.info(f"Training on: {date}")
     study_and_train()
 
