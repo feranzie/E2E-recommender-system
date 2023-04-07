@@ -9,8 +9,8 @@ COPY [ "Pipfile", "Pipfile.lock", "./" ]
 
 RUN pipenv install --system --deploy
 
-COPY ["model.bin", "main.csv", "matrix.npz", "users.pkl", "predict1.py", "./" ]
+COPY ["model.bin", "main.csv", "matrix.npz", "users.pkl", "predict.py", "./" ]
 
 EXPOSE 9696
 
-ENTRYPOINT [ "gunicorn", "--bind=0.0.0.0:9696", "predict1:app" ]
+ENTRYPOINT [ "gunicorn", "--bind=0.0.0.0:9696", "predict:app" ]
