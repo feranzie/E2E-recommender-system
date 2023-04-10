@@ -19,7 +19,7 @@ PREDICTION_COLLECTION = "data"
 REPORT_COLLECTION = "report"
 REFERENCE_DATA_FILE = "../datasets/green_tripdata_2021-03.parquet" # Modify this for Q7
 TARGET_DATA_FILE = "target.csv"
-MODEL_FILE = os.getenv('MODEL_FILE', '../prediction_service/lin_reg.bin') # Modify this for Q7
+MODEL_FILE = os.getenv('MODEL_FILE', '../web-service/model.bin') # Modify this for Q7
 
 @task
 def upload_target(filename):
@@ -31,5 +31,11 @@ def upload_target(filename):
             collection.update_one({"id": row[0]},
                                   {"$set": {"target": float(row[1])}}
                                  )
-
+@task
+def load_reference_data(filename):
+    
+    with open(MODEL_FILE, 'rb') as f_in:
+        model = pickle.load(f_in)
+    
+    return reference_data
 
