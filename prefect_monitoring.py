@@ -39,3 +39,9 @@ def load_reference_data(filename):
     
     return reference_data
 
+@task
+def fetch_data():
+    client = MongoClient(MONGO_CLIENT_ADDRESS)
+    data = client.get_database(MONGO_DATABASE).get_collection(PREDICTION_COLLECTION).find()
+    df = pandas.DataFrame(list(data))
+    return df
