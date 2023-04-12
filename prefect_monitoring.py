@@ -45,3 +45,19 @@ def fetch_data():
     data = client.get_database(MONGO_DATABASE).get_collection(PREDICTION_COLLECTION).find()
     df = pandas.DataFrame(list(data))
     return df
+
+@task
+def run_evidently(ref_data, data):
+
+    ref_data.drop(['ehail_fee'], axis=1, inplace=True)
+    data.drop('ehail_fee', axis=1, inplace=True)  # drop empty column (until Evidently will work with it properly)
+
+    profile = Profile(sections=[DataDriftProfileSection(), RegressionPerformanceProfileSection()])
+    mapping = ColumnMapping(prediction="prediction", numerical_features=['trip_distance'],
+                            categorical_features=['PULocationID', 'DOLocationID'],
+                            datetime_features=[])
+    profile.calculate(ref_data, data, mapping)
+
+    dashboard = Dashboard(tabs=[DataDriftTab(), RegressionPerformanceTab(verbose_level=0)])
+    dashboard.calculate(ref_data, data, mapping)
+    return json.loads(profile.json()), dashboard
