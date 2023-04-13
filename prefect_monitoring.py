@@ -61,3 +61,12 @@ def run_evidently(ref_data, data):
     dashboard = Dashboard(tabs=[DataDriftTab(), RegressionPerformanceTab(verbose_level=0)])
     dashboard.calculate(ref_data, data, mapping)
     return json.loads(profile.json()), dashboard
+
+
+@task
+def save_report(result):
+    """Save evidendtly profile for ride prediction to mongo server"""
+
+    client = MongoClient(MONGO_CLIENT_ADDRESS)
+    collection = client.get_database(MONGO_DATABASE).get_collection(REPORT_COLLECTION)
+    collection.insert_one(result)
