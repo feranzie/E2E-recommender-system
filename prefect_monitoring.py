@@ -70,3 +70,12 @@ def save_report(result):
     client = MongoClient(MONGO_CLIENT_ADDRESS)
     collection = client.get_database(MONGO_DATABASE).get_collection(REPORT_COLLECTION)
     collection.insert_one(result)
+
+@task
+def save_html_report(result, filename_suffix=None):
+    """Create evidently html report file for ride prediction"""
+    
+    if filename_suffix is None:
+        filename_suffix = datetime.now().strftime('%Y-%m-%d-%H-%M')
+    
+    result.save(f"ride_prediction_drift_report_{filename_suffix}.html")
