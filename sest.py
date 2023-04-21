@@ -21,6 +21,6 @@ def recommender(user_id):
         for i in user['category'].unique():
             if i not in current_user['category'].unique():
                 recomendation.append(i)
-    return recomendation
+    return recomendation[:10]
 
-print(recommender('5df49b32cc709107827fb3c7')[:10])
+print(recommender('5df49b32cc709107827fb3c7'))
