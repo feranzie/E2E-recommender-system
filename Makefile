@@ -1,5 +1,5 @@
 LOCAL_TAG:=$(shell date +"%Y-%m-%d-%H-%M")
-LOCAL_IMAGE_NAME:=stream-model-duration:${LOCAL_TAG}
+LOCAL_IMAGE_NAME:=recommender-system:${LOCAL_TAG}
 
 test:
 	pytest tests/
