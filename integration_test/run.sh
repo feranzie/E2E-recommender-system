@@ -47,3 +47,4 @@ fi
 
 
 docker-compose down
+3
