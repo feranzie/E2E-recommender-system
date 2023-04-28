@@ -1,5 +1,5 @@
-.vscode
-.pytest_cache
-_pycache_
-mlruns
-mlartifacts
+.vscode/
+.pytest_cache/
+_pycache_/
+mlruns/
+mlartifacts/
