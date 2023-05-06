@@ -22,15 +22,15 @@ jobs:
           python-version: 3.9
 
       - name: Install dependencies
-        working-directory: "recommender-system"
+        working-directory: ""
         run: pip install pipenv && pipenv install --dev
 
       - name: Run Unit tests
-        working-directory: "recommender-system"
+        working-directory: ""
         run: pipenv run pytest tests/
 
       - name: Lint
-        working-directory: "recommender-system"
+        working-directory: ""
         run: pipenv run pylint --recursive=y .
 
       - name: Configure AWS Credentials
